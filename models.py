@@ -314,9 +314,9 @@ class Disk(LogModel):
         """
         # go through checks
         reserve_limit = self.get_borrow_limit()
-        if user.reserved.count() >= reserve_limit:
+        if user.reserved.count() + user.borrowed.count() >= reserve_limit:
             raise BusinessException(
-                ("A member can reserve at most %d disks"
+                ("A member can reserve or borrow at most %d disks"
                 " at the same time" % reserve_limit),
                 3)
         if self.avail_type != 'Available':
